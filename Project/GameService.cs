@@ -14,8 +14,12 @@ namespace CastleGrimtol.Project
 
     public void StartGame()
     {
-      System.Console.WriteLine("You are a meer peasant in the Land of Ooo, and are looking to become a legendary adventurer like your idol Billy the Hero. You decide to do whatever it may take in order to accomplish a feat worthy of qualifying you as a notable hero. Ever since you started questing, you have been uplifting rocks and pulling on tree branches in hopes of discovering a secret dungeon in the process. Today you have decided to quest for dungeons in the Enchiridion Mountains, a forbidden land crawling with death and disease.");
       Setup();
+      Console.Clear();
+      System.Console.WriteLine("You are a peasant in the Land of Ooo, and are looking to become a legendary adventurer like your idol, Billy the Hero.\nYou decide to do whatever it may take in order to accomplish a feat worthy of qualifying you as a notable hero.\nSince beginning your quest, you have been lifting rocks and pulling on tree branches in hopes of\ndiscovering a secret dungeon in the process. Today you have decided to quest for dungeons in the Enchiridion Mountains;\na forbidden land crawling with death and disease.");
+      System.Console.WriteLine("");
+      System.Console.WriteLine("In order to make your search easier, you decide to either only pull on branches, or to only lift rocks.\nWhich do you choose, (B)ranches or (R)ocks?");
+      SearchStrategy();
       while (Questing)
       {
         System.Console.WriteLine($"{CurrentRoom.Description}");
@@ -48,7 +52,24 @@ namespace CastleGrimtol.Project
 
     }
 
-
+    void SearchStrategy()
+    {
+      string strategy = Console.ReadLine();
+      switch (strategy.ToLower()[0])
+      {
+        case 'b':
+          System.Console.WriteLine("After pulling on nearly 2,000 branches, you pull on your last branch of the day and hear a click as it pulls down\ntoward the ground. You notice a nearby boulder moveing to slowly reveal an entry point of a dungeon. ");
+          break;
+        case 'r':
+          System.Console.WriteLine("After lifting nearly 2,000 rocks, you lift your last rock of the day and hear a crack as the surrounding rocks\nfall down the mountainside. You notice a large boulder start moving your direction after displacing the smaller rocks\nholding it into place. You are unable to get out of the way in time and are crushed by the boulder.\nYou were never worthy of becoming a hero like Billy.");
+          Questing = false;
+          break;
+        default:
+          System.Console.WriteLine("Please enter a valid strategy, either pull (B)ranches, or lift (R)ocks");
+          SearchStrategy();
+          break;
+      }
+    }
 
 
 
