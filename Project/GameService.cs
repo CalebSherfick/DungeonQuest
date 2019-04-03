@@ -8,60 +8,77 @@ namespace CastleGrimtol.Project
   {
     public Room CurrentRoom { get; set; }
     public Player CurrentPlayer { get; set; }
+    public bool Questing { get; set; }
 
+    public void Setup()
+    {
+      //Create all Rooms
+      Room start = new Room("Entry", "You stand in a very dark room. You see a faint glow in the distance coming from the North, in what you can only assume is another section of the dungeon.");
+      Room middle = new Room("Middle", "There is a very noticable fire burning in a doorway leading to another room to the West. You can barely make out a few items scattered around the room as the light flickers. As your eyes adjust, you see a closed door on the East side of the room.");
+      Room right = new Room("Right", "The room is pitch black. You are unable to see anything.");
+      Room left = new Room("Left", "With the absence of the fire barrier, you are unable to see what lies before you.");
+
+      //Establish relationships
+      start.AddExit(Direction.north, middle);
+      middle.AddExit(Direction.east, right);
+      middle.AddExit(Direction.south, start);
+      middle.AddExit(Direction.west, left);
+      right.AddExit(Direction.west, middle);
+      left.AddExit(Direction.east, middle);
+
+      CurrentRoom = start;
+      Questing = true;
+
+    }
     public void GetUserInput()
     {
-      throw new System.NotImplementedException();
+
     }
 
     public void Go(string direction)
     {
-      throw new System.NotImplementedException();
+
     }
 
     public void Help()
     {
-      throw new System.NotImplementedException();
+
     }
 
     public void Inventory()
     {
-      throw new System.NotImplementedException();
+
     }
 
     public void Look()
     {
-      throw new System.NotImplementedException();
+
     }
 
     public void Quit()
     {
-      throw new System.NotImplementedException();
+
     }
 
     public void Reset()
     {
-      throw new System.NotImplementedException();
+
     }
 
-    public void Setup()
-    {
-      throw new System.NotImplementedException();
-    }
 
     public void StartGame()
     {
-      throw new System.NotImplementedException();
+
     }
 
     public void TakeItem(string itemName)
     {
-      throw new System.NotImplementedException();
+
     }
 
     public void UseItem(string itemName)
     {
-      throw new System.NotImplementedException();
+
     }
   }
 }

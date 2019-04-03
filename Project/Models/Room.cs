@@ -8,8 +8,8 @@ namespace CastleGrimtol.Project.Models
   {
     public string Name { get; set; }
     public string Description { get; set; }
-    List<Item> Items { get; set; }
-    Dictionary<Direction, IRoom> Exits { get; set; }
+    public List<Item> Items { get; set; }
+    public Dictionary<Direction, IRoom> Exits { get; set; }
 
 
     public void PrintRoomItems()
