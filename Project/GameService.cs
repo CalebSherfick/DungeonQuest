@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using CastleGrimtol.Project.Interfaces;
 using CastleGrimtol.Project.Models;
@@ -30,6 +31,31 @@ namespace CastleGrimtol.Project
       Questing = true;
 
     }
+
+
+    public void StartGame()
+    {
+      Setup();
+      while (Questing)
+      {
+        System.Console.WriteLine($"{CurrentRoom.Description}");
+        System.Console.WriteLine("What would you like to do?");
+        string choice = Console.ReadLine();
+      }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
     public void GetUserInput()
     {
 
@@ -66,10 +92,6 @@ namespace CastleGrimtol.Project
     }
 
 
-    public void StartGame()
-    {
-
-    }
 
     public void TakeItem(string itemName)
     {
