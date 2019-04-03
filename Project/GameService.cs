@@ -11,6 +11,22 @@ namespace CastleGrimtol.Project
     public Player CurrentPlayer { get; set; }
     public bool Questing { get; set; }
 
+
+    public void StartGame()
+    {
+      System.Console.WriteLine("You are a meer peasant in the Land of Ooo, and are looking to become a legendary adventurer like your idol Billy the Hero. You decide to do whatever it may take in order to accomplish a feat worthy of qualifying you as a notable hero. Ever since you started questing, you have been uplifting rocks and pulling on tree branches in hopes of discovering a secret dungeon in the process. Today you have decided to quest for dungeons in the Enchiridion Mountains, a forbidden land crawling with death and disease.");
+      Setup();
+      while (Questing)
+      {
+        System.Console.WriteLine($"{CurrentRoom.Description}");
+        System.Console.WriteLine("What would you like to do?");
+        string choice = Console.ReadLine();
+      }
+
+    }
+
+
+
     public void Setup()
     {
       //Create all Rooms
@@ -33,17 +49,6 @@ namespace CastleGrimtol.Project
     }
 
 
-    public void StartGame()
-    {
-      Setup();
-      while (Questing)
-      {
-        System.Console.WriteLine($"{CurrentRoom.Description}");
-        System.Console.WriteLine("What would you like to do?");
-        string choice = Console.ReadLine();
-      }
-
-    }
 
 
 
