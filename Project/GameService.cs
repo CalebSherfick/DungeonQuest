@@ -59,6 +59,17 @@ namespace CastleGrimtol.Project
       {
         case 'b':
           System.Console.WriteLine("After pulling on nearly 2,000 branches, you pull on your last branch of the day and hear a click as it pulls down\ntoward the ground. You notice a nearby boulder moveing to slowly reveal an entry point of a dungeon. ");
+          System.Console.WriteLine("Do you wish to enter the dungeon?");
+          string enter = Console.ReadLine().ToLower();
+          if (enter == "y" || enter == "yes" || enter == "yeah" || enter == "of course" || enter == "hell yeah" || enter == "hell yes" || enter == "no duh")
+          {
+            return;
+          }
+          else
+          {
+            System.Console.WriteLine("After seeing a dungeon for the first time, you got too scared to enter and went home to cry while taking a hot bath.");
+            Questing = false;
+          }
           break;
         case 'r':
           System.Console.WriteLine("After lifting nearly 2,000 rocks, you lift your last rock of the day and hear a crack as the surrounding rocks\nfall down the mountainside. You notice a large boulder start moving your direction after displacing the smaller rocks\nholding it into place. You are unable to get out of the way in time and are crushed by the boulder.\nYou were never worthy of becoming a hero like Billy.");
