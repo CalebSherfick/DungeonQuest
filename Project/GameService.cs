@@ -98,7 +98,7 @@ namespace CastleGrimtol.Project
 
     }
 
-    public void Go(string direction)
+    public void Go(Direction direction)
     {
 
     }
