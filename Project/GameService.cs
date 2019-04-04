@@ -125,6 +125,7 @@ namespace CastleGrimtol.Project
         case "look":
           break;
         case "help":
+          Help();
           break;
         case "quit":
           break;
@@ -183,7 +184,19 @@ namespace CastleGrimtol.Project
     }
     public void Help()
     {
+      Console.Clear();
+      System.Console.WriteLine(@"Here are some acceptable commands for your quest:
 
+ go + {North/East/South/West} = move in direction you specify
+ take + {item} = take item you specify
+ use + {item} = use item you specify
+ inventory = shows items you are carrying
+ look = shows description of the room
+ quit = exits out of the game
+ reset = restarts the game");
+      System.Console.WriteLine("");
+      System.Console.WriteLine("Press any key to continue.");
+      Console.ReadKey();
     }
 
     public void Quit()
