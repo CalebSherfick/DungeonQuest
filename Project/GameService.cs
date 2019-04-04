@@ -49,9 +49,9 @@ namespace CastleGrimtol.Project
 
       //Establish relationships
       start.AddExit(Direction.north, middle);
-      middle.AddExit(Direction.east, right);
+      //   middle.AddExit(Direction.east, right);
       middle.AddExit(Direction.south, start);
-      middle.AddExit(Direction.west, left);
+      //   middle.AddExit(Direction.west, left);
       right.AddExit(Direction.west, middle);
       left.AddExit(Direction.east, middle);
 
@@ -60,11 +60,11 @@ namespace CastleGrimtol.Project
       //   Item litTorch = new Item("Torch", "Flames dance at the end, radiating both heat and light.");
       //   Item sword = new Item("Dusty Sword", "Covered in dust and looks very old.");
       //   Item cleanSword = new Item("Billy's Sword", "A magical blade, feels like it could cut anything!");
-      Item bucket = new Item("Bucket", "Just an ordinary wooden bucket.");
-      Item filledBucket = new Item("Bucket", "A wooden bucket filled with water.");
+      //   Item bucket = new Item("Bucket", "Just an ordinary wooden bucket.");
+      //   Item filledBucket = new Item("Bucket", "A wooden bucket filled with water.");
 
       start.AddItem(key);
-      middle.AddItem(bucket);
+      //   middle.AddItem(bucket);
       //   middle.AddItem(torch);
       //   start.AddItem(sword);
 
@@ -184,14 +184,14 @@ namespace CastleGrimtol.Project
         CurrentRoom.Items.Remove(item);
         CurrentPlayer.AddItem(item);
         System.Console.WriteLine($"You took the {itemName}");
-        Thread.Sleep(1500);
+        Thread.Sleep(1000);
 
       }
       else
       {
         Console.Clear();
         System.Console.WriteLine(CurrentRoom.Items.Count > 0 ? $"Couldn't find {itemName}" : "There is nothing to be taken.");
-        Thread.Sleep(1500);
+        Thread.Sleep(1000);
       }
     }
 
@@ -206,8 +206,55 @@ namespace CastleGrimtol.Project
 
     public void UseItem(string itemName)
     {
-
+      Item item = ValidateItem(itemName, CurrentPlayer.Inventory);
+      if (item != null)
+      {
+        Console.Clear();
+        // CurrentRoom.AddItem(item);
+        // CurrentPlayer.Inventory.Remove(item);
+        // System.Console.WriteLine($"You used the {itemName}");
+        // Thread.Sleep(1500);
+        switch (itemName)
+        {
+          case "key":
+            if (CurrentRoom.Name == "Middle")
+            {
+              System.Console.WriteLine("You take out the key and insert it into the giant door to the East. It seems like the key is a perfect fit, but it doesn't budge when you turn it.");
+              System.Console.WriteLine("");
+              System.Console.WriteLine("Do you want to force the key?");
+              string force = Console.ReadLine().ToLower();
+              if (force == "y" || force == "yes" || force == "yeah" || force == "of course" || force == "hell yeah" || force == "hell yes" || force == "no duh" || force == "for sure" || force == "sure" || force == "i guess" || force == "yeet")
+              {
+                CurrentPlayer.Inventory.Remove(item);
+                System.Console.WriteLine("As you force the key, you hear a slight click just as the key snaps off while inside the door. You push on the door and are able to move it just enough to squeeze in.");
+                System.Console.WriteLine("");
+                System.Console.WriteLine("Press any key to continue through the door.");
+                Console.ReadKey();
+                CurrentRoom.AddExit(Direction.east, right);
+                CurrentRoom = right;
+              }
+              else
+              {
+                System.Console.WriteLine("You removed they key from the keyhole on the door.");
+                Thread.Sleep(1500);
+              }
+            }
+            else
+            {
+              System.Console.WriteLine("You see a small hole in the wall and decide to stick the key into it...");
+              System.Console.WriteLine("It does nothing");
+            }
+            break;
+        }
+      }
+      else
+      {
+        Console.Clear();
+        System.Console.WriteLine(CurrentRoom.Items.Count > 0 ? $"You don't have a {itemName}" : "You have nothing to use.");
+        Thread.Sleep(1000);
+      }
     }
+
     public void Inventory()
     {
       Console.Clear();
