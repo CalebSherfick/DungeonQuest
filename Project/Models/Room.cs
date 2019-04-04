@@ -15,16 +15,28 @@ namespace CastleGrimtol.Project.Models
 
     public void PrintRoomItems()
     {
-      Console.WriteLine("Interactable items in the room: ");
-      Items.ForEach(item =>
+      if (Items.Count > 0)
       {
-        Console.WriteLine(item.Name);
-      });
+        Console.WriteLine("You notice the following laying around the room:");
+        Items.ForEach(item =>
+        {
+          Console.WriteLine(item.Name);
+        });
+      }
+      else
+      {
+        System.Console.WriteLine("There is nothing else to notice in this room.");
+      }
     }
 
     public void AddExit(Direction direction, IRoom room)
     {
       Exits.Add(direction, room);
+    }
+
+    public void AddItem(Item item)
+    {
+      Items.Add(item);
     }
 
     public IRoom TraveltoRoom(Direction dir)

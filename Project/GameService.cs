@@ -37,10 +37,15 @@ namespace CastleGrimtol.Project
     public void Setup()
     {
       //Create all Rooms
-      Room start = new Room("Entry", "You stand in a very dark room. You see a faint glow in the distance coming from the North, in what you can only assume\nis another section of the dungeon.");
-      Room middle = new Room("Middle", "There is a very noticable fire burning in a doorway leading to another room to the West. You can barely make out a few\nitems scattered around the room as the light flickers. As your eyes adjust, you see a closed door on the East side of\nthe room.");
-      Room right = new Room("Right", "The room is pitch black. You are unable to see anything.");
-      Room left = new Room("Left", "With the absence of the fire barrier, you are unable to see what lies before you.");
+      //   Room start = new Room("Entry", "You stand in a very dark room. You see a faint glow in the distance coming from the North, in what you can only assume\nis another section of the dungeon.");
+      //   Room middle = new Room("Middle", "There is a very noticable fire burning in a doorway leading to another room to the West. You can barely make out a few\nitems scattered around the room as the light flickers. As your eyes adjust, you see a closed door on the East side of\nthe room.");
+      //   Room right = new Room("Right", "The room is pitch black. You are unable to see anything.");
+      //   Room left = new Room("Left", "With the absence of the fire barrier, you are unable to see what lies before you.");
+      Room start = new Room("Entry", "You notice this is the begininng of the dungeon, it is very damp and smells of mold. Being in this room makes you question your abilities.");
+      Room middle = new Room("Middle", "There is a large burning fire blocking the entrance of a pathway to the East. To the West you see a heavy metal door that has accumulated years worth of rust.");
+      Room right = new Room("Right", "There is a small fountain in the center of the room. It looks extremely elegant and seems odd to have been locked behind such a large door.");
+      Room left = new Room("Left", "Before you is a dusty old book sitting atop an altar.");
+
 
       //Establish relationships
       start.AddExit(Direction.north, middle);
@@ -50,7 +55,22 @@ namespace CastleGrimtol.Project
       right.AddExit(Direction.west, middle);
       left.AddExit(Direction.east, middle);
 
+      Item key = new Item("Key", "An old fragile skeleton key.");
+      //   Item torch = new Item("Torch", "Looks unused.");
+      //   Item litTorch = new Item("Torch", "Flames dance at the end, radiating both heat and light.");
+      //   Item sword = new Item("Dusty Sword", "Covered in dust and looks very old.");
+      //   Item cleanSword = new Item("Billy's Sword", "A magical blade, feels like it could cut anything!");
+      Item bucket = new Item("Bucket", "Just an ordinary wooden bucket.");
+      Item filledBucket = new Item("Bucket", "A wooden bucket filled with water.");
+
+      start.AddItem(key);
+      middle.AddItem(bucket);
+      //   middle.AddItem(torch);
+      //   start.AddItem(sword);
+
+
       CurrentRoom = start;
+      CurrentPlayer = new Player("Finn");
       Questing = true;
 
     }
@@ -90,17 +110,6 @@ namespace CastleGrimtol.Project
       }
     }
 
-
-
-
-
-
-
-
-
-
-
-
     public void GetUserInput()
     {
       string input = Console.ReadLine().ToLower();
@@ -117,12 +126,15 @@ namespace CastleGrimtol.Project
           Go(option);
           break;
         case "take":
+          TakeItem(option);
           break;
         case "use":
           break;
         case "inventory":
+          Inventory();
           break;
         case "look":
+          Look();
           break;
         case "help":
           Help();
@@ -165,7 +177,31 @@ namespace CastleGrimtol.Project
 
     public void TakeItem(string itemName)
     {
+      Item item = ValidateItem(itemName, CurrentRoom.Items);
+      if (item != null)
+      {
+        Console.Clear();
+        CurrentRoom.Items.Remove(item);
+        CurrentPlayer.AddItem(item);
+        System.Console.WriteLine($"You took the {itemName}");
+        Thread.Sleep(1500);
 
+      }
+      else
+      {
+        Console.Clear();
+        System.Console.WriteLine(CurrentRoom.Items.Count > 0 ? $"Couldn't find {itemName}" : "There is nothing to be taken.");
+        Thread.Sleep(1500);
+      }
+    }
+
+    private Item ValidateItem(string input, List<Item> itemList)
+    {
+      return itemList.Find(i =>
+      {
+        return i.Name.ToLower() == input;
+      });
+      //here is where you would want to change the description
     }
 
     public void UseItem(string itemName)
@@ -174,13 +210,25 @@ namespace CastleGrimtol.Project
     }
     public void Inventory()
     {
-
+      Console.Clear();
+      System.Console.WriteLine($"{CurrentRoom.Description}");
+      System.Console.WriteLine("");
+      CurrentPlayer.PrintInventory();
+      System.Console.WriteLine("");
+      System.Console.WriteLine("What would you like to do?");
+      GetUserInput();
     }
 
 
     public void Look()
     {
-
+      Console.Clear();
+      System.Console.WriteLine($"{CurrentRoom.Description}");
+      System.Console.WriteLine("");
+      CurrentRoom.PrintRoomItems();
+      System.Console.WriteLine("");
+      System.Console.WriteLine("What would you like to do?");
+      GetUserInput();
     }
     public void Help()
     {
