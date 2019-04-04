@@ -28,8 +28,14 @@ namespace CastleGrimtol.Project
         System.Console.WriteLine("");
         System.Console.WriteLine("What would you like to do?");
         GetUserInput();
-      }
 
+        //if current room is fireroom 
+        //if CurrentPlayer.immune
+        //win
+        //else
+        //DIe
+      }
+      //play again?
     }
 
 
@@ -54,6 +60,9 @@ namespace CastleGrimtol.Project
       //   middle.AddExit(Direction.west, left);
       right.AddExit(Direction.west, middle);
       left.AddExit(Direction.east, middle);
+
+      middle.addLockedRoom("key", Direction.east, right);
+      middle.addLockedRoom("fountain", Direction.west, left);
 
       Item key = new Item("Key", "An old fragile skeleton key.");
       //   Item torch = new Item("Torch", "Looks unused.");
@@ -129,6 +138,7 @@ namespace CastleGrimtol.Project
           TakeItem(option);
           break;
         case "use":
+          UseItem(option);
           break;
         case "inventory":
           Inventory();
@@ -206,52 +216,71 @@ namespace CastleGrimtol.Project
 
     public void UseItem(string itemName)
     {
-      Item item = ValidateItem(itemName, CurrentPlayer.Inventory);
-      if (item != null)
+      Console.Clear();
+      // CurrentRoom.AddItem(item);
+      // CurrentPlayer.Inventory.Remove(item);
+      // System.Console.WriteLine($"You used the {itemName}");
+      // Thread.Sleep(1500);
+      switch (itemName)
       {
-        Console.Clear();
-        // CurrentRoom.AddItem(item);
-        // CurrentPlayer.Inventory.Remove(item);
-        // System.Console.WriteLine($"You used the {itemName}");
-        // Thread.Sleep(1500);
-        switch (itemName)
-        {
-          case "key":
-            if (CurrentRoom.Name == "Middle")
+        case "key":
+          Item item = ValidateItem(itemName, CurrentPlayer.Inventory);
+          if (item == null)
+          {
+            Console.Clear();
+            System.Console.WriteLine(CurrentRoom.Items.Count > 0 ? $"You don't have a {itemName}" : "You have nothing to use.");
+            Thread.Sleep(1000);
+            return;
+          }
+          if (CurrentRoom.LockedRooms.ContainsKey("key") && KeyNarritive(item))
+          {
+            CurrentRoom.Use("key");
+          }
+          else
+          {
+            System.Console.WriteLine("You see a small hole in the wall and decide to stick the key into it...");
+            System.Console.WriteLine("It does nothing");
+          }
+          break;
+        case "fountain":
+          if (CurrentRoom.Name == "fountain")
+          {
+            System.Console.WriteLine("It's a random fountain in an old grimy dungeon. Are you sure you want to drink from it?");
+            string enter = Console.ReadLine().ToLower();
+            if (enter == "y" || enter == "yes" || enter == "yeah" || enter == "of course" || enter == "hell yeah" || enter == "hell yes" || enter == "no duh" || enter == "for sure" || enter == "sure" || enter == "i guess" || enter == "yeet")
             {
-              System.Console.WriteLine("You take out the key and insert it into the giant door to the East. It seems like the key is a perfect fit, but it doesn't budge when you turn it.");
-              System.Console.WriteLine("");
-              System.Console.WriteLine("Do you want to force the key?");
-              string force = Console.ReadLine().ToLower();
-              if (force == "y" || force == "yes" || force == "yeah" || force == "of course" || force == "hell yeah" || force == "hell yes" || force == "no duh" || force == "for sure" || force == "sure" || force == "i guess" || force == "yeet")
-              {
-                CurrentPlayer.Inventory.Remove(item);
-                System.Console.WriteLine("As you force the key, you hear a slight click just as the key snaps off while inside the door. You push on the door and are able to move it just enough to squeeze in.");
-                System.Console.WriteLine("");
-                System.Console.WriteLine("Press any key to continue through the door.");
-                Console.ReadKey();
-                CurrentRoom.AddExit(Direction.east, right);
-                CurrentRoom = right;
-              }
-              else
-              {
-                System.Console.WriteLine("You removed they key from the keyhole on the door.");
-                Thread.Sleep(1500);
-              }
+              System.Console.WriteLine("You take a drink from the fountaina nd instantly realize it was a maginal fountain. You're entire body feels indestructable, maybe you should try it out!");
+              CurrentPlayer.Immune = true;
             }
             else
             {
-              System.Console.WriteLine("You see a small hole in the wall and decide to stick the key into it...");
-              System.Console.WriteLine("It does nothing");
+              System.Console.WriteLine("You decide not to drink from the fountain.");
             }
-            break;
-        }
+          }
+          break;
+
+      }
+    }
+
+    private bool KeyNarritive(Item item)
+    {
+      System.Console.WriteLine("You take out the key and insert it into the giant door to the East. It seems like the key is a perfect fit, but it doesn't budge when you turn it.");
+      System.Console.WriteLine("");
+      System.Console.WriteLine("Do you want to force the key?");
+      string force = Console.ReadLine().ToLower();
+      if (force == "y" || force == "yes" || force == "yeah" || force == "of course" || force == "hell yeah" || force == "hell yes" || force == "no duh" || force == "for sure" || force == "sure" || force == "i guess" || force == "yeet")
+      {
+        CurrentPlayer.Inventory.Remove(item);
+        System.Console.WriteLine("As you force the key, you hear a slight click just as the key snaps off while inside the door. You push on the door and are able to move it just enough to squeeze in." + Environment.NewLine);
+        System.Console.WriteLine("Press any key to continue.");
+        Console.ReadKey();
+        return true;
       }
       else
       {
-        Console.Clear();
-        System.Console.WriteLine(CurrentRoom.Items.Count > 0 ? $"You don't have a {itemName}" : "You have nothing to use.");
-        Thread.Sleep(1000);
+        System.Console.WriteLine("You removed they key from the keyhole on the door.");
+        Thread.Sleep(1500);
+        return false;
       }
     }
 

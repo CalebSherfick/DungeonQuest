@@ -12,6 +12,8 @@ namespace CastleGrimtol.Project.Models
     public List<Item> Items { get; set; }
     public Dictionary<Direction, IRoom> Exits { get; set; }
 
+    public Dictionary<string, KeyValuePair<Direction, IRoom>> LockedRooms { get; set; }
+
 
     public void PrintRoomItems()
     {
@@ -51,12 +53,33 @@ namespace CastleGrimtol.Project.Models
       return (IRoom)this;
     }
 
+
+    public bool Use(string itemName)
+    {
+      if (LockedRooms.ContainsKey(itemName))
+      {
+        KeyValuePair<Direction, IRoom> roomToAdd = LockedRooms[itemName];
+        Exits.Add(roomToAdd.Key, roomToAdd.Value);
+        LockedRooms.Remove(itemName);
+        //Prompt that the room is now unlocked and there is an exit to the  _______
+        return true;
+      }
+      return false;
+    }
+
     public Room(string name, string desc)
     {
       Exits = new Dictionary<Direction, IRoom>();
+      LockedRooms = new Dictionary<string, KeyValuePair<Direction, IRoom>>();
       Items = new List<Item>();
       Name = name;
       Description = desc;
+    }
+
+    internal void addLockedRoom(string unlockName, Direction dir, Room room)
+    {
+      KeyValuePair<Direction, IRoom> lockedRoom = new KeyValuePair<Direction, IRoom>(dir, room);
+      LockedRooms.Add(unlockName, lockedRoom);
     }
   }
 

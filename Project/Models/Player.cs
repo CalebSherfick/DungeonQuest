@@ -8,6 +8,7 @@ namespace CastleGrimtol.Project.Models
   {
     public List<Item> Inventory { get; set; }
     public string Name { get; set; }
+    public bool Immune { get; set; } = false;
 
     public void AddItem(Item item)
     {
