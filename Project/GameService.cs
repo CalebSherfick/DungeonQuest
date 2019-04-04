@@ -24,6 +24,30 @@ namespace CastleGrimtol.Project
       while (Questing)
       {
         Console.Clear();
+        if (CurrentRoom.Name == "Left" && CurrentPlayer.Immune == false)
+        {
+          Console.Clear();
+          System.Console.WriteLine("You attempt to go through the fire barrier and catch yourself on fire in the process. You burn up and die.");
+          Questing = false;
+        }
+        if (CurrentRoom.Name == "Left" && CurrentPlayer.Immune == true)
+        {
+          Console.Clear();
+          System.Console.WriteLine($"{CurrentRoom.Description}");
+          System.Console.WriteLine("Do you wish to grab it?");
+          string enter = Console.ReadLine().ToLower();
+          if (enter == "y" || enter == "yes" || enter == "yeah" || enter == "of course" || enter == "hell yeah" || enter == "hell yes" || enter == "no duh" || enter == "for sure" || enter == "sure" || enter == "i guess" || enter == "yeet")
+          {
+            System.Console.WriteLine("As you approach the book, you step and trigger a pressure plate and see arrows fly toward you. With your newly gained powers, the arrows bounce off of you and fall to the ground. You grab the book to find it is Billy the Hero's diary on how he became a hero. With the power from the fountain and the knowledge from the book, you are well on your way to becoming a hero. Congratulations!");
+            Questing = false;
+          }
+          else
+          {
+            System.Console.WriteLine("You decide to play it safe and do not take the book.");
+          }
+        }
+
+
         System.Console.WriteLine($"{CurrentRoom.Description}");
         System.Console.WriteLine("");
         System.Console.WriteLine("What would you like to do?");
