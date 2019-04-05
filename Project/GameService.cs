@@ -29,6 +29,7 @@ namespace CastleGrimtol.Project
           Console.Clear();
           System.Console.WriteLine("You attempt to go through the fire barrier and catch yourself on fire in the process. You burn up and die.");
           Questing = false;
+          continue;
         }
         if (CurrentRoom.Name == "Left" && CurrentPlayer.Immune == true)
         {
@@ -40,6 +41,7 @@ namespace CastleGrimtol.Project
           {
             System.Console.WriteLine("As you approach the book, you step and trigger a pressure plate and see arrows fly toward you. With your newly gained powers, the arrows bounce off of you and fall to the ground. You grab the book to find it is Billy the Hero's diary on how he became a hero. With the power from the fountain and the knowledge from the book, you are well on your way to becoming a hero. Congratulations!");
             Questing = false;
+            continue;
           }
           else
           {
@@ -81,7 +83,7 @@ namespace CastleGrimtol.Project
       start.AddExit(Direction.north, middle);
       //   middle.AddExit(Direction.east, right);
       middle.AddExit(Direction.south, start);
-      //   middle.AddExit(Direction.west, left);
+      middle.AddExit(Direction.west, left);
       right.AddExit(Direction.west, middle);
       left.AddExit(Direction.east, middle);
 
@@ -267,7 +269,7 @@ namespace CastleGrimtol.Project
           }
           break;
         case "fountain":
-          if (CurrentRoom.Name == "fountain")
+          if (CurrentRoom.Name == "Right")
           {
             System.Console.WriteLine("It's a random fountain in an old grimy dungeon. Are you sure you want to drink from it?");
             string enter = Console.ReadLine().ToLower();
