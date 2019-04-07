@@ -48,7 +48,7 @@ namespace CastleGrimtol.Project.Models
         return Exits[dir];
       }
       Console.Clear();
-      System.Console.WriteLine("There is nowhere to go in that direction.");
+      System.Console.WriteLine("You are currently unable to go in that direction.");
       Thread.Sleep(1500);
       return (IRoom)this;
     }

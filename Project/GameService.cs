@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Reflection;
 using System.Threading;
 using CastleGrimtol.Project.Interfaces;
 using CastleGrimtol.Project.Models;
@@ -34,34 +36,34 @@ namespace CastleGrimtol.Project
         if (CurrentRoom.Name == "Left" && CurrentPlayer.Immune == true)
         {
           Console.Clear();
+          System.Console.WriteLine("Feeling indestructable after drinking from the fountain, you jump through the fire barrier blocking the room to the\nWest and make it through unharmed!" + Environment.NewLine);
+          System.Console.WriteLine("Press any key to continue.");
+          Console.ReadKey();
+          Console.Clear();
           System.Console.WriteLine($"{CurrentRoom.Description}");
           System.Console.WriteLine("Do you wish to grab it?");
           string enter = Console.ReadLine().ToLower();
           if (enter == "y" || enter == "yes" || enter == "yeah" || enter == "of course" || enter == "hell yeah" || enter == "hell yes" || enter == "no duh" || enter == "for sure" || enter == "sure" || enter == "i guess" || enter == "yeet")
           {
-            System.Console.WriteLine("As you approach the book, you step and trigger a pressure plate and see arrows fly toward you. With your newly gained powers, the arrows bounce off of you and fall to the ground. You grab the book to find it is Billy the Hero's diary on how he became a hero. With the power from the fountain and the knowledge from the book, you are well on your way to becoming a hero. Congratulations!");
+            Console.Clear();
+            System.Console.WriteLine("As you approach the book, you step and trigger a pressure plate and see arrows fly toward you. With your newly gained\npowers, the arrows bounce off of you and fall to the ground. You grab the book to find it is Billy the Hero's diary\non how he became a hero. With the power from the fountain and the knowledge from the book, you are well on your\nway to becoming a hero. Congratulations!");
             Questing = false;
             continue;
           }
           else
           {
+            Console.Clear();
             System.Console.WriteLine("You decide to play it safe and do not take the book.");
+            Thread.Sleep(1500);
           }
         }
 
-
+        Console.Clear();
         System.Console.WriteLine($"{CurrentRoom.Description}");
         System.Console.WriteLine("");
         System.Console.WriteLine("What would you like to do?");
         GetUserInput();
-
-        //if current room is fireroom 
-        //if CurrentPlayer.immune
-        //win
-        //else
-        //DIe
       }
-      //play again?
     }
 
 
@@ -73,9 +75,9 @@ namespace CastleGrimtol.Project
       //   Room middle = new Room("Middle", "There is a very noticable fire burning in a doorway leading to another room to the West. You can barely make out a few\nitems scattered around the room as the light flickers. As your eyes adjust, you see a closed door on the East side of\nthe room.");
       //   Room right = new Room("Right", "The room is pitch black. You are unable to see anything.");
       //   Room left = new Room("Left", "With the absence of the fire barrier, you are unable to see what lies before you.");
-      Room start = new Room("Entry", "You notice this is the begininng of the dungeon, it is very damp and smells of mold. Being in this room makes you question your abilities.");
-      Room middle = new Room("Middle", "There is a large burning fire blocking the entrance of a pathway to the East. To the West you see a heavy metal door that has accumulated years worth of rust.");
-      Room right = new Room("Right", "There is a small fountain in the center of the room. It looks extremely elegant and seems odd to have been locked behind such a large door.");
+      Room start = new Room("Entry", "You notice this is the begininng of the dungeon, it is very damp and smells of mold. Being in this room makes you\nquestion your abilities.");
+      Room middle = new Room("Middle", "There is a large burning fire blocking the entrance of a pathway to the East. To the West you see a heavy metal door\nthat has accumulated years worth of rust.");
+      Room right = new Room("Right", "There is an elegant fountain in the center of the room. It seems all the door was protecting was this fountain...");
       Room left = new Room("Left", "Before you is a dusty old book sitting atop an altar.");
 
 
@@ -176,8 +178,12 @@ namespace CastleGrimtol.Project
           Help();
           break;
         case "quit":
+        case "q":
+          Quit();
           break;
         case "reset":
+        case "r":
+          Reset();
           break;
         default:
           Console.Clear();
@@ -264,23 +270,30 @@ namespace CastleGrimtol.Project
           }
           else
           {
+            Console.Clear();
             System.Console.WriteLine("You see a small hole in the wall and decide to stick the key into it...");
             System.Console.WriteLine("It does nothing");
+            Thread.Sleep(2000);
           }
           break;
         case "fountain":
           if (CurrentRoom.Name == "Right")
           {
             System.Console.WriteLine("It's a random fountain in an old grimy dungeon. Are you sure you want to drink from it?");
-            string enter = Console.ReadLine().ToLower();
-            if (enter == "y" || enter == "yes" || enter == "yeah" || enter == "of course" || enter == "hell yeah" || enter == "hell yes" || enter == "no duh" || enter == "for sure" || enter == "sure" || enter == "i guess" || enter == "yeet")
+            string drink = Console.ReadLine().ToLower();
+            if (drink == "y" || drink == "yes" || drink == "yeah" || drink == "of course" || drink == "hell yeah" || drink == "hell yes" || drink == "no duh" || drink == "for sure" || drink == "sure" || drink == "i guess" || drink == "yeet")
             {
-              System.Console.WriteLine("You take a drink from the fountaina nd instantly realize it was a maginal fountain. You're entire body feels indestructable, maybe you should try it out!");
+              Console.Clear();
+              System.Console.WriteLine("You take a drink from the fountain and instantly realize it was a maginal fountain. Your entire body feels\nindestructable, maybe you should try it out!" + Environment.NewLine);
               CurrentPlayer.Immune = true;
+              System.Console.WriteLine("Press any key to continue.");
+              Console.ReadKey();
             }
             else
             {
+              Console.Clear();
               System.Console.WriteLine("You decide not to drink from the fountain.");
+              Thread.Sleep(1500);
             }
           }
           break;
@@ -290,14 +303,15 @@ namespace CastleGrimtol.Project
 
     private bool KeyNarritive(Item item)
     {
-      System.Console.WriteLine("You take out the key and insert it into the giant door to the East. It seems like the key is a perfect fit, but it doesn't budge when you turn it.");
+      System.Console.WriteLine("You take out the key and insert it into the giant door to the East. It seems like the key is a perfect fit, but it\ndoesn't budge when you turn it.");
       System.Console.WriteLine("");
       System.Console.WriteLine("Do you want to force the key?");
       string force = Console.ReadLine().ToLower();
       if (force == "y" || force == "yes" || force == "yeah" || force == "of course" || force == "hell yeah" || force == "hell yes" || force == "no duh" || force == "for sure" || force == "sure" || force == "i guess" || force == "yeet")
       {
         CurrentPlayer.Inventory.Remove(item);
-        System.Console.WriteLine("As you force the key, you hear a slight click just as the key snaps off while inside the door. You push on the door and are able to move it just enough to squeeze in." + Environment.NewLine);
+        Console.Clear();
+        System.Console.WriteLine("As you force the key, you hear a slight click just as the key snaps off while inside the door. The door to the East is now unlocked." + Environment.NewLine);
         System.Console.WriteLine("Press any key to continue.");
         Console.ReadKey();
         return true;
@@ -351,15 +365,16 @@ namespace CastleGrimtol.Project
 
     public void Quit()
     {
-
+      Console.Clear();
+      System.Console.WriteLine("Feeling pathetic and weak, you get too scared to continue questing inside the dungeon and decide to leave. Billy is disappointed in you.");
+      Questing = false;
     }
 
     public void Reset()
     {
-
+      var filePath = Assembly.GetExecutingAssembly().Location;
+      Process.Start(filePath);
+      Environment.Exit(0);
     }
-
-
-
   }
 }
