@@ -19,10 +19,10 @@ namespace CastleGrimtol.Project
     {
       Setup();
       Console.Clear();
-      //   System.Console.WriteLine("You are a peasant in the Land of Ooo, and are looking to become a legendary adventurer like your idol, Billy the Hero.\nYou decide to do whatever it may take in order to accomplish a feat worthy of qualifying you as a notable hero.\nSince beginning your quest, you have been lifting rocks and pulling on tree branches in hopes of\ndiscovering a secret dungeon in the process. Today you have decided to quest for dungeons in the Enchiridion Mountains;\na forbidden land crawling with death and disease.");
-      //   System.Console.WriteLine("");
-      //   System.Console.WriteLine("In order to make your search easier, you decide to either only pull on branches, or to only lift rocks.\nWhich do you choose, (B)ranches or (R)ocks?");
-      //   SearchStrategy();
+      System.Console.WriteLine("You are a peasant in the Land of Ooo, and are looking to become a legendary adventurer like your idol, Billy the Hero.\nYou decide to do whatever it may take in order to accomplish a feat worthy of qualifying you as a notable hero.\nSince beginning your quest, you have been lifting rocks and pulling on tree branches in hopes of\ndiscovering a secret dungeon in the process. Today you have decided to quest for dungeons in the Enchiridion Mountains;\na forbidden land crawling with death and disease.");
+      System.Console.WriteLine("");
+      System.Console.WriteLine("In order to make your search easier, you decide to either only pull on branches, or to only lift rocks.\nWhich do you choose, (B)ranches or (R)ocks?");
+      SearchStrategy();
       while (Questing)
       {
         Console.Clear();
