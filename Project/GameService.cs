@@ -139,6 +139,12 @@ namespace CastleGrimtol.Project
           System.Console.WriteLine("After lifting nearly 2,000 rocks, you lift your last rock of the day and hear a crack as the surrounding rocks\nfall down the mountainside. You notice a large boulder start moving your direction after displacing the smaller rocks\nholding it into place. You are unable to get out of the way in time and are crushed by the boulder.\nYou were never worthy of becoming a hero like Billy.");
           Questing = false;
           break;
+        case 'q':
+          Quit();
+          break;
+        case 's':
+          Reset();
+          break;
         default:
           Console.Clear();
           System.Console.WriteLine("Please enter a valid strategy, either pull (B)ranches, or lift (R)ocks");
@@ -297,6 +303,11 @@ namespace CastleGrimtol.Project
             }
           }
           break;
+        default:
+          Console.Clear();
+          System.Console.WriteLine("You must have the item in your inventory in order to use it.");
+          Thread.Sleep(1500);
+          break;
 
       }
     }
@@ -372,9 +383,12 @@ namespace CastleGrimtol.Project
 
     public void Reset()
     {
-      var filePath = Assembly.GetExecutingAssembly().Location;
-      Process.Start(filePath);
-      Environment.Exit(0);
+      // var filePath = Assembly.GetExecutingAssembly().Location;
+      // Process.Start(filePath);
+      // Environment.Exit(0);
+      Questing = false;
+      Console.Clear();
+      StartGame();
     }
   }
 }
